@@ -13,7 +13,7 @@ export function Localizacao() {
     },
     {
       nome: "Balneário Camboriú",
-      endereco: "Rua Miguel Matte, 687, Sala 1605 – Ed. Evolution Corporate",
+      endereco: "Rua Miguel Matte, 687, Sala 803 – Ed. Evolution Corporate",
       bairro: "Pioneiros, Balneário Camboriú - SC",
       cep: "CEP 88339-234",
       whatsapp: "+55 47 99137-8070",
