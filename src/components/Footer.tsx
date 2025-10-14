@@ -2,6 +2,21 @@ import { Instagram, Phone, Mail } from "lucide-react";
 import monograma from "figma:asset/f2039f561624ab374594bc1881fa1d0bddda8abe.png";
 
 export function Footer() {
+  // Detecta rota da unidade e define título/WhatsApp dinâmicos
+  const path = typeof window !== "undefined" ? window.location.pathname : "";
+  const unit =
+    path.includes("/transplante-capilar-canoas")
+      ? "canoas"
+      : path.includes("/transplante-capilar-balneario-camboriu")
+      ? "balneario"
+      : null;
+
+  const whatsappByUnit: Record<string, string> = {
+    canoas: "https://wa.me/5551996305040",
+    balneario: "https://wa.me/5547991378070",
+  };
+  const phoneHref = unit ? whatsappByUnit[unit] : "https://wa.me/5551996305040";
+  const heading = unit ? "CONTATO" : "CONTATOS";
   return (
     <footer className="bg-[#1E1E1E] text-white py-16 md:py-20 px-4 md:px-6">
       <div className="container mx-auto max-w-6xl">
@@ -27,7 +42,7 @@ export function Footer() {
             </h4>
             <div className="flex gap-4 justify-center">
               <a 
-                href="https://www.instagram.com/dr_douglas_jordao/" 
+                href="https://www.instagram.com/grupo_douglasjordao/" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-12 h-12 bg-[#A89888] rounded-full flex items-center justify-center hover:bg-[#8B7B6B] transition-colors duration-300"
@@ -35,7 +50,7 @@ export function Footer() {
                 <Instagram className="w-6 h-6" />
               </a>
               <a 
-                href="https://wa.me/5551996305040" 
+                href={phoneHref}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-12 h-12 bg-[#A89888] rounded-full flex items-center justify-center hover:bg-[#8B7B6B] transition-colors duration-300"
@@ -54,17 +69,21 @@ export function Footer() {
           {/* Contatos */}
           <div className="space-y-6 text-center md:text-right">
             <h4 className="text-xl title-subtitle" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '500', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-              CONTATOS
+              {heading}
             </h4>
             <div className="space-y-6 text-white/70" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-              <div>
-                <p className="text-white font-medium mb-1">CANOAS - RS</p>
-                <p>+55 51 99630-5040</p>
-              </div>
-              <div>
-                <p className="text-white font-medium mb-1">BALNEÁRIO CAMBORIÚ - SC</p>
-                <p>+55 47 99137-8070</p>
-              </div>
+              {(!unit || unit === "canoas") && (
+                <div>
+                  <p className="text-white font-medium mb-1">CANOAS - RS</p>
+                  <p>+55 51 99630-5040</p>
+                </div>
+              )}
+              {(!unit || unit === "balneario") && (
+                <div>
+                  <p className="text-white font-medium mb-1">BALNEÁRIO CAMBORIÚ - SC</p>
+                  <p>+55 47 99137-8070</p>
+                </div>
+              )}
             </div>
           </div>
         </div>

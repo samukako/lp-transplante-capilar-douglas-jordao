@@ -15,22 +15,60 @@ export function Navigation() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // scroll com offset para compensar navbar fixa, com retry e fallback
   const scrollToSection = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-    setIsMobileMenuOpen(false); // Fechar menu ao clicar em um link
+    const offset = 110; // altura aproximada da navbar fixa
+
+    const doScroll = () => {
+      const el = document.getElementById(id);
+      if (!el) return false;
+      const y = el.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({ top: y, behavior: "smooth" });
+      return true;
+    };
+
+    // Fecha o menu primeiro para evitar overlay interferindo
+    setIsMobileMenuOpen(false);
+
+    // Tenta imediatamente e, se não achar, tenta novamente algumas vezes
+    if (!doScroll()) {
+      let attempts = 0;
+      const maxAttempts = 5;
+      const interval = setInterval(() => {
+        attempts++;
+        if (doScroll() || attempts >= maxAttempts) {
+          clearInterval(interval);
+          if (attempts >= maxAttempts) {
+            // fallback: define hash para permitir navegação nativa
+            window.location.hash = id;
+          }
+        }
+      }, 120);
+    }
   };
 
   const menuItems = [
     { name: "INÍCIO", id: "inicio" },
     { name: "DIFERENCIAIS", id: "diferenciais" },
-    { name: "RESULTADOS", id: "resultados" },
     { name: "ESPECIALISTA", id: "especialista" },
     { name: "FAQ", id: "faq" },
-    { name: "CONTATO", id: "contato" }
+    { name: "ESTÁGIOS", id: "tipos-calvicie" },
+    { name: "CONTATO", id: "contato" },
   ];
 
   const handleWhatsApp = () => {
-    window.open("https://wa.me/5551996305040", "_blank");
+    const path = typeof window !== "undefined" ? window.location.pathname : "";
+
+    const whatsappByUnit: Record<string, string> = {
+      canoas: "https://wa.me/5551996305040",
+      balneario: "https://wa.me/5547991378070",
+    };
+
+    const href = path.includes("/transplante-capilar-balneario-camboriu")
+      ? whatsappByUnit.balneario
+      : whatsappByUnit.canoas;
+
+    window.open(href, "_blank");
     setIsMobileMenuOpen(false);
   };
 
@@ -40,22 +78,22 @@ export function Navigation() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled 
-            ? "bg-black/95 backdrop-blur-md shadow-xl" 
+          isScrolled
+            ? "bg-black/95 backdrop-blur-md shadow-xl"
             : "bg-gradient-to-b from-black/55 via-black/40 to-transparent"
         }`}
-        style={{ height: '90px' }}
+        style={{ height: "90px" }}
       >
         <div className="container mx-auto px-6 h-full">
           <div className="flex items-center justify-between h-full">
             <div className="h-16 w-16 flex-shrink-0">
-              <img 
-                src={monograma} 
-                alt="Dr. Douglas Jordão - Monograma" 
+              <img
+                src={monograma}
+                alt="Dr. Douglas Jordão - Monograma"
                 className="h-full w-full object-contain"
               />
             </div>
-            
+
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center justify-center flex-1 space-x-12">
               {menuItems.map((item) => (
@@ -63,18 +101,18 @@ export function Navigation() {
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
                   className="transition-colors duration-300 text-sm font-medium title-subtitle text-white/90 hover:text-white"
-                  style={{ 
-                    fontFamily: 'Montserrat, sans-serif',
-                    fontWeight: '500',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.1em'
+                  style={{
+                    fontFamily: "Montserrat, sans-serif",
+                    fontWeight: "500",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.1em",
                   }}
                 >
                   {item.name}
                 </button>
               ))}
             </div>
-            
+
             {/* Desktop CTA */}
             <div className="hidden md:block">
               <button
@@ -85,11 +123,11 @@ export function Navigation() {
                   hover:bg-[#8B7B6B] hover:shadow-lg hover:scale-105
                   text-sm font-medium
                 "
-                style={{ 
-                  fontFamily: 'Montserrat, sans-serif',
-                  fontWeight: '500',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.08em'
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontWeight: "500",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.08em",
                 }}
               >
                 AGENDE SUA AVALIAÇÃO
@@ -115,7 +153,7 @@ export function Navigation() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="mobile-menu-overlay fixed inset-0 z-40 bg-black/95 backdrop-blur-md md:hidden"
-            style={{ paddingTop: '90px' }}
+            style={{ paddingTop: "90px" }}
           >
             {/* Botão X no canto superior direito */}
             <button
@@ -126,26 +164,32 @@ export function Navigation() {
               <X size={24} />
             </button>
 
-            <div className="flex flex-col items-center justify-center h-full space-y-8 px-6" style={{ minHeight: 'calc(100vh - 90px)' }}>
+            <div
+              className="flex flex-col items-center justify-center h-full space-y-8 px-6"
+              style={{ minHeight: "calc(100vh - 90px)" }}
+            >
               {menuItems.map((item) => (
                 <motion.button
                   key={item.id}
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.3, delay: menuItems.indexOf(item) * 0.1 }}
+                  transition={{
+                    duration: 0.3,
+                    delay: menuItems.indexOf(item) * 0.1,
+                  }}
                   onClick={() => scrollToSection(item.id)}
                   className="text-white text-xl font-medium"
-                  style={{ 
-                    fontFamily: 'Montserrat, sans-serif',
-                    fontWeight: '500',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.1em'
+                  style={{
+                    fontFamily: "Montserrat, sans-serif",
+                    fontWeight: "500",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.1em",
                   }}
                 >
                   {item.name}
                 </motion.button>
               ))}
-              
+
               <motion.button
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -157,11 +201,11 @@ export function Navigation() {
                   hover:bg-[#8B7B6B] hover:shadow-lg
                   text-sm font-medium
                 "
-                style={{ 
-                  fontFamily: 'Montserrat, sans-serif',
-                  fontWeight: '500',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.08em'
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontWeight: "500",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.08em",
                 }}
               >
                 AGENDE SUA AVALIAÇÃO

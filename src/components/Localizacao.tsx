@@ -21,6 +21,20 @@ export function Localizacao() {
     }
   ];
 
+  const path = typeof window !== "undefined" ? window.location.pathname : "";
+  const unit =
+    path.includes("/transplante-capilar-canoas")
+      ? "canoas"
+      : path.includes("/transplante-capilar-balneario-camboriu")
+      ? "balneario"
+      : null;
+
+  const filteredClinicas = unit === "canoas"
+    ? clinicas.filter(c => c.nome.toLowerCase().includes("canoas"))
+    : unit === "balneario"
+    ? clinicas.filter(c => c.nome.toLowerCase().includes("balneário") || c.nome.toLowerCase().includes("balneario"))
+    : clinicas;
+
   return (
     <section id="contato" className="py-16 md:py-20 px-4 md:px-6 bg-[#F5F5F3]">
       <div className="container mx-auto max-w-6xl">
@@ -30,13 +44,30 @@ export function Localizacao() {
           transition={{ duration: 0.8 }}
           className="text-center mb-12 md:mb-16"
         >
-          <h2 className="tracking-[0.12em] uppercase text-2xl md:text-3xl lg:text-4xl text-[#1E1E1E] mb-8" style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 600 }}>
-            LOCALIZAÇÃO DAS CLÍNICAS
+          <h2
+            className="tracking-[0.12em] uppercase text-2xl md:text-3xl lg:text-4xl text-[#1E1E1E] mb-4"
+            style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 600 }}
+          >
+            {unit ? "LOCALIZAÇÃO DA CLÍNICA" : "LOCALIZAÇÃO DAS CLÍNICAS"}
           </h2>
+          <p
+            className="text-[#1E1E1E]/70 max-w-2xl mx-auto text-base md:text-lg"
+            style={{ fontFamily: 'DM Sans, sans-serif' }}
+          >
+            {unit
+              ? "Visite a nossa clínica e agende sua avaliação."
+              : "Encontre a unidade mais próxima e agende sua avaliação."}
+          </p>
         </motion.div>
         
-        <div className="grid lg:grid-cols-2 gap-8 md:gap-12">
-          {clinicas.map((clinica, index) => (
+        <div
+          className={
+            filteredClinicas.length === 1
+              ? "grid grid-cols-1 gap-8 md:gap-12 max-w-3xl mx-auto"
+              : "grid lg:grid-cols-2 gap-8 md:gap-12"
+          }
+        >
+          {filteredClinicas.map((clinica, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 50 }}

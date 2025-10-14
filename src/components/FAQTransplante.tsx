@@ -128,6 +128,21 @@ export function FAQTransplante() {
     );
   };
 
+  const path = typeof window !== "undefined" ? window.location.pathname : "";
+
+  const whatsappByUnit: Record<string, string> = {
+    canoas: "https://wa.me/5551996305040",
+    balneario: "https://wa.me/5547991378070",
+  };
+
+  const href = path.includes("/transplante-capilar-balneario-camboriu")
+    ? whatsappByUnit.balneario
+    : whatsappByUnit.canoas;
+
+  const handleWhatsApp = () => {
+    window.open(href, "_blank");
+  };
+
   return (
     <section id="faq" className="py-16 md:py-24 px-4 md:px-6 bg-white">
       <div className="container mx-auto max-w-6xl">
@@ -184,7 +199,7 @@ export function FAQTransplante() {
               Ainda tem dúvidas? Nossa equipe está pronta para esclarecer todas as suas questões.
             </p>
             <button
-              onClick={() => window.open("https://wa.me/5551996305040", "_blank")}
+              onClick={handleWhatsApp}
               className="bg-white text-[#A89888] px-6 py-3 rounded-full font-semibold hover:bg-[#F5F5F3] transition-colors duration-300"
               style={{ fontFamily: "Montserrat, sans-serif", textTransform: "uppercase", letterSpacing: "0.05em" }}
             >

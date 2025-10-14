@@ -3,8 +3,21 @@ import { Button } from "./ui/button";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 
 export function HeroTransplante() {
+  const path = typeof window !== "undefined" ? window.location.pathname : "";
+
+  const whatsappByUnit: Record<string, string> = {
+    canoas: "https://wa.me/5551996305040",
+    balneario: "https://wa.me/5547991378070",
+  };
+
+  const href = path.includes("/transplante-capilar-balneario-camboriu")
+    ? whatsappByUnit.balneario
+    : path.includes("/transplante-capilar-canoas")
+    ? whatsappByUnit.canoas
+    : whatsappByUnit.canoas; // padrão no hub
+
   const handleWhatsApp = () => {
-    window.open("https://wa.me/5551996305040", "_blank");
+    window.open(href, "_blank");
   };
 
   return (

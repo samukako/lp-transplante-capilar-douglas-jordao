@@ -3,7 +3,18 @@ import whatsappIcon from "figma:asset/5d02656df08e7462ec5b1b0ef323e7d08169ff33.p
 
 export function WhatsAppButton() {
   const handleWhatsApp = () => {
-    window.open("https://wa.me/5551996305040", "_blank");
+    const path = typeof window !== "undefined" ? window.location.pathname : "";
+
+    const whatsappByUnit: Record<string, string> = {
+      canoas: "https://wa.me/5551996305040",
+      balneario: "https://wa.me/5547991378070",
+    };
+
+    const href = path.includes("/transplante-capilar-balneario-camboriu")
+      ? whatsappByUnit.balneario
+      : whatsappByUnit.canoas;
+
+    window.open(href, "_blank");
   };
 
   return (

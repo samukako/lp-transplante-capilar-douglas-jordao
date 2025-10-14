@@ -65,7 +65,7 @@ export function TiposCalvicie() {
   ];
 
   return (
-    <section className="py-16 md:py-24 px-4 md:px-6 bg-[#F5F5F3]">
+    <section id="tipos-calvicie" className="scroll-mt-[120px] py-16 md:py-24 px-4 md:px-6 bg-[#F5F5F3]">
       <div className="container mx-auto max-w-6xl">
         {/* Título da seção */}
         <motion.div
