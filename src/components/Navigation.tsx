@@ -64,11 +64,13 @@ export function Navigation() {
       balneario: "https://wa.me/5547991378070",
     };
 
-    const href = path.includes("/transplante-capilar-balneario-camboriu")
-      ? whatsappByUnit.balneario
-      : whatsappByUnit.canoas;
+    const isBC = path.includes("/transplante-capilar-balneario-camboriu");
+    const href = isBC ? whatsappByUnit.balneario : whatsappByUnit.canoas;
+    const cidade = isBC ? "Balneário Camboriú" : "Canoas";
+    const preset = `Tenho interesse no Transplante Capilar em ${cidade}!`;
+    const finalHref = `${href}?text=${encodeURIComponent(preset)}`;
 
-    window.open(href, "_blank");
+    window.open(finalHref, "_blank");
     setIsMobileMenuOpen(false);
   };
 
