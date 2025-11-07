@@ -1,6 +1,9 @@
 import { motion } from "motion/react";
 
 export function ProblemaeSolucao() {
+  const videoSrc =
+    "https://pub-e3b763a078db46f6a1b2f02e1d69ed43.r2.dev/WhatsApp%20Video%202025-10-02%20at%2013.02.50.mp4";
+
   return (
     <section className="py-16 md:py-24 px-4 md:px-6 bg-white">
       <div className="container mx-auto max-w-6xl">
@@ -13,13 +16,17 @@ export function ProblemaeSolucao() {
             transition={{ duration: 0.8 }}
             className="video-vertical"
           >
-            <iframe
-              src="https://www.youtube.com/embed/ihPTUl_k3k4?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&loop=1&playlist=ihPTUl_k3k4&playsinline=1&iv_load_policy=3&showinfo=0"
-              title="Transplante capilar - Dr. Douglas Jordão"
-              allow="autoplay; encrypted-media; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            ></iframe>
+            <video
+              src={videoSrc}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              aria-hidden="true"
+              className="w-full h-full object-cover rounded-3xl"
+              style={{ backgroundColor: "#000" }}
+            />
           </motion.div>
 
           {/* Conteúdo textual */}
