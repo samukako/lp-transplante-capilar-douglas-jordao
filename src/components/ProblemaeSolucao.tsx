@@ -24,7 +24,7 @@ export function ProblemaeSolucao() {
               playsInline
               preload="auto"
               aria-hidden="true"
-              className="w-full h-full object-cover rounded-3xl"
+              className="w-full h-full object-cover rounded-[32px] md:rounded-[40px]"
               style={{ backgroundColor: "#000" }}
             />
           </motion.div>
