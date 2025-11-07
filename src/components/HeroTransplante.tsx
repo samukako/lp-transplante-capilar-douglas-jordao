@@ -17,8 +17,7 @@ export function HeroTransplante() {
     : whatsappByUnit.canoas; // padrão no hub
 
   const handleWhatsApp = () => {
-    const cidade = path.includes("/transplante-capilar-balneario-camboriu") ? "Balneário Camboriú" : "Canoas";
-    const preset = `Tenho interesse no Transplante Capilar em ${cidade}!`;
+    const preset = "Tenho interesse no Transplante Capilar.";
     const finalHref = `${href}?text=${encodeURIComponent(preset)}`;
     window.open(finalHref, "_blank");
   };

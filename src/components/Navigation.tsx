@@ -66,8 +66,7 @@ export function Navigation() {
 
     const isBC = path.includes("/transplante-capilar-balneario-camboriu");
     const href = isBC ? whatsappByUnit.balneario : whatsappByUnit.canoas;
-    const cidade = isBC ? "Balneário Camboriú" : "Canoas";
-    const preset = `Tenho interesse no Transplante Capilar em ${cidade}!`;
+    const preset = "Tenho interesse no Transplante Capilar.";
     const finalHref = `${href}?text=${encodeURIComponent(preset)}`;
 
     window.open(finalHref, "_blank");
