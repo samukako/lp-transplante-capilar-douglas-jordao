@@ -1,7 +1,36 @@
 
   # LP Transplante Capilar - Grupo Douglas Jordão
 
-  This is a code bundle for LP Transplante Capilar - Grupo Douglas Jordão. The original project is available at https://www.figma.com/design/9E7q1b7X8fIQOoeim5kiSQ/LP-Transplante-Capilar---Grupo-Douglas-Jord%C3%A3o.
+Este repositório contém os arquivos da landing page do **Gruop Dr. Douglas Jordão**, especialista em harmonização facial.
+
+A página foi desenvolvida como um site estático, focado em performance, carregamento rápido e fácil manutenção.
+
+---
+
+## Tecnologias utilizadas
+
+- HTML
+- CSS
+- JavaScript (quando necessário)
+
+---
+
+## Deploy
+
+O site é publicado automaticamente através do **Cloudflare Pages**, conectado a este repositório no GitHub.
+
+Sempre que houver alterações no código e elas forem enviadas para a branch principal, o Cloudflare realiza o deploy automaticamente.
+
+---
+
+## Atualizações
+
+Para atualizar a landing page:
+
+```bash
+git add .
+git commit -m "Atualização da landing page"
+git push origin main
 
   ## Running the code
 
